@@ -4,6 +4,9 @@ import os
 import requests
 from lxml import html
 
+
+
+#构建请求头 
 headers = {
     'Host': 'www.zhihu.com',
     'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6',
@@ -17,32 +20,40 @@ headers = {
 }
 
 
-def save(text, filename='temp', path='download1'):
+def save(text, filename='temp', path='download'):
+    #拼接文件路径名
     fpath = os.path.join(path, filename) 
-    with open(fpath, 'wb') as  f:          #用"wb"方不会出现图片花掉
-        print('output:', fpath)
+     #用二进制写模式打开，否则爬下来的图片会花掉
+    with open(fpath, 'wb') as  f:         
+        #print 'output:', fpath
         f.write(text)
 
 
 def save_image(image_url):
     resp = requests.get(image_url)
     page = resp.content
-    filename = image_url.split('zhimg.com/')[-1]
+    #i += 1 
+    #切割image_url后半部分为文件名,开头加i方便排序
+    filename = image_url.split('zhimg.com/')[-1] 
     save(page, filename)
-    print "saving" + filename
+    print "saving:", filename
 
 
 def crawl(url):
     resp = requests.get(url, headers=headers)
+    
     page = resp.content
+    #得到对象根节点
     root = html.fromstring(page)
+    #用XPath得到图片url列表
     image_urls = root.xpath('//img[@data-original]/@data-original')
+    #print image_urls
     for image_url in image_urls:
         save_image(image_url)
 
 
 if __name__ == '__main__':
-    """注意在运行之前，先确保该文件的同路径下存在一个download1的文件夹, 用于存放爬虫下载的图片
+    """注意在运行之前，先确保该文件的同路径下存在一个download的文件夹, 用于存放爬虫下载的图片
        输入任意知乎问题url，例如：https://www.zhihu.com/question/263362761
     """
     url = raw_input("please input url:")  
