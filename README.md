@@ -1,6 +1,3 @@
-My crawler
-===========
-
 # learn-crawler
 
 语言版本：python2.7
