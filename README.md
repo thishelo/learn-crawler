@@ -17,10 +17,8 @@ XPath
 
 
 ### 链接：
-[点击这里进入我的新浪微博：@求生之路helo](https://weibo.com/thishelo)
-
-### weibo:
-<https://weibo.com/thishelo>
+[新浪微博：@求生之路helo](https://weibo.com/thishelo)
+    
     
 
 ### e-mail:guo2391982682@hotmail.com
