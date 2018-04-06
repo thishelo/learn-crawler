@@ -11,6 +11,7 @@ opener = urllib2.build_opener(http_handler)
 
 request = urllib2.Request("http://www.baidu.com/")
 
+#不用调用urllib2.urlopen了
 response = opener.open(request)
 
 print response.read()
