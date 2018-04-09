@@ -6,7 +6,7 @@ from Queue import Queue
 import threading
 import time
 import json
-from collections import OrderedDict
+#from collections import OrderedDict
 
 
 
@@ -137,17 +137,17 @@ def main():
 
     for thread in threadcrawl:
         thread.join()
-        print "1"
+        #print "1"
 
     global PARSE_EXIT
     PARSE_EXIT = True
     #由于线程是非守护线程要等待线程运行
     for thread in threadparse:
         thread.join()
-        print "2"
+        #print "2"
     with lock:
         filename.close()
-    print "thanks use"
+    print "Thank you for using"
 
 
 

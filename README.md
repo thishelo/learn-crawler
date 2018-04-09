@@ -15,6 +15,19 @@ XPath
 
 		2018.4.1更新：面向对象，封装；
 
+## thread_doulists
+
+thread_doulists说明：爬取豆瓣豆列中所有作品的简介。
+
+使用工具及知识点：
+python2.7
+lmxl
+XPath
+requests
+多线程
+
+
+
 
 ### 链接：
 [新浪微博：@求生之路helo](https://weibo.com/thishelo)
