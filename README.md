@@ -17,7 +17,7 @@ XPath
 
 ## thread_doulists
 
-thread_doulists说明：爬取豆瓣豆列中所有作品的简介。
+thread_doulists说明：爬取豆瓣豆列中所有作品的简介并保存到json文件中。
 
 使用工具及知识点：
 python2.7
