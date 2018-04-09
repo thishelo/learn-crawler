@@ -6,6 +6,7 @@ from Queue import Queue
 import threading
 import time
 import json
+from collections import OrderedDict
 
 
 
@@ -28,7 +29,7 @@ class ThreadCrawl(threading.Thread):
             try:
                 #block默认是True,会阻塞，所以设为False
                 page = self.pageQueue.get(False) * 25
-                print page
+                #print page
                 url = "https://www.douban.com/doulist/2602718/?start=" + str(page)
                 #print url
                 
@@ -50,6 +51,7 @@ class Threadparse(threading.Thread):
         self.lock = lock 
     def run(self):
         #print "go" + self.threadName
+
         while not PARSE_EXIT:
             try:
                 html = self.dataQueue.get(False)
@@ -58,6 +60,7 @@ class Threadparse(threading.Thread):
                 pass
         #print "exit" + self.threadName
     def parse(self, html):
+        
         #解析为 HTML DOM
         html = etree.HTML(html)
 
@@ -68,21 +71,19 @@ class Threadparse(threading.Thread):
             num = node.xpath('.//span[@class="pos"]')[0].text
             name = node.xpath('.//div/div[2]/div[3]/a')[0].text
             star = node.xpath('./div/div[2]/div[4]/span[2]')[0].text
-            info = node.xpath('./div/div[2]/div[5]')[1].text
-
-        
-
-
+            category = node.xpath('./div/div[2]/div[5]')[0].text
+            #print "go2"
+            
             items = {
+                "num" : num,
                 "name" : name,
-                "info" : info,
                 "star" : star,
-                "num" : num
-            }   
+                "category" : category
+                }   
                 
             with self.lock:
                 #用dumps()把python对象转化为json字符串并保存
-                self.filename.write(json.dumps(items,ensure_ascii = False).encode("utf-8") + "\n")
+                self.filename.write(json.dumps(items, ensure_ascii = False).encode("utf-8") + "\n")
                     
 
 
@@ -93,7 +94,7 @@ PARSE_EXIT = False
 
 def main():
     #创建一个页面队列，表示40个页面
-    print "haha" + threading.active_count()
+    
     pageQueue = Queue(40)
 
     for i in range(0, 40):
@@ -115,9 +116,11 @@ def main():
         threadcrawl.append(thread)
 
     filename = open("doulist.json", "a")
+    #解析线程的名字
+    parselist = ["parse1", "parse2", "parse3"]
     #用来保存解析线程
-    threadparse = ["parse1", "parse2", "parse3"]
-    for threadName in threadparse:
+    threadparse = []
+    for threadName in parselist:
         thread = Threadparse(threadName, dataQueue, filename, lock )
         thread.start()
         threadparse.append(thread)
@@ -144,7 +147,7 @@ def main():
         print "2"
     with lock:
         filename.close()
-    print "thanks use！"
+    print "thanks use"
 
 
 
