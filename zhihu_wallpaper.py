@@ -23,12 +23,13 @@ class Zhihu_wallpapper(object):
     def save_image(self, image_url):
         
         resp = requests.get(image_url)
+        #content返回的是byte型数据
         page = resp.content
          
         #切割image_url后半部分为文件名
         filename = image_url.split('zhimg.com/')[-1] 
         self.save(page, filename)
-        #打印的中文转成unicode在windows平台就不会出现乱码了
+        #打印的中文转成unicode在windows平台就不会出现乱码了，win平台会自动把unicode转成gbk
         print u"正在保存:", filename
 
 
@@ -61,6 +62,14 @@ class Zhihu_wallpapper(object):
         for image_url in image_urls:
             #将处理好的图片url传递给save_image方法
             self.save_image(image_url)
+
+def main():
+    url = raw_input("please input url:") 
+    img = Zhihu_wallpapper(url)
+    #print "测试"
+    #print u"测试unicode"
+    img.crawl()
+
             
 
 
@@ -68,8 +77,5 @@ if __name__ == '__main__':
     """注意在运行之前，先确保该文件的同路径下存在一个download的文件夹, 用于存放爬虫下载的图片
        输入任意知乎问题url，例如：https://www.zhihu.com/question/263362761
     """
-    url = raw_input("please input url:") 
-    img = Zhihu_wallpapper(url)
-    #print "测试"
-    #print u"测试unicode"
-    img.crawl()
+    main()
+    
