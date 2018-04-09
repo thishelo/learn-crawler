@@ -15,6 +15,7 @@ XPath
 
 		2018.4.1更新：面向对象，封装；
 
+		2018.4.9更新：解决windows下打印乱码问题	
 ## thread_doulists
 
 thread_doulists说明：爬取豆瓣豆列中所有作品的简介并保存到json文件中。

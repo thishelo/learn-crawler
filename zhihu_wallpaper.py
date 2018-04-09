@@ -28,7 +28,8 @@ class Zhihu_wallpapper(object):
         #切割image_url后半部分为文件名
         filename = image_url.split('zhimg.com/')[-1] 
         self.save(page, filename)
-        print "saving:", filename
+        #打印的中文转成unicode在windows平台就不会出现乱码了
+        print u"正在保存:", filename
 
 
 
@@ -69,4 +70,6 @@ if __name__ == '__main__':
     """
     url = raw_input("please input url:") 
     img = Zhihu_wallpapper(url)
+    #print "测试"
+    #print u"测试unicode"
     img.crawl()
